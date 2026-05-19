@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="title">CIDCO - Citizen Portal (Estate Services)</title>
+    <link rel="shortcut icon" href="cidco_logo.png" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Linked Premium Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="logo-container">
+                <!-- Authentic uploaded CIDCO logo -->
+                <img src="cidco_logo.png" alt="CIDCO Logo">
+            </div>
+            <div class="header-text">
+                <h1 data-lang="org_title">CITY AND INDUSTRIAL DEVELOPMENT CORPORATION OF MAHARASHTRA LIMITED</h1>
+                <p data-lang="org_subtitle">(Government of Maharashtra Undertaking)</p>
+            </div>
+        </div>
+        <div class="header-controls">
+            <!-- Text Resizer -->
+            <div class="text-resize-group">
+                <button class="resize-btn" onclick="resizeText('decrease')">A-</button>
+                <button class="resize-btn" onclick="resizeText('normal')">A</button>
+                <button class="resize-btn" onclick="resizeText('increase')">A+</button>
+            </div>
+            <!-- Dark Mode -->
+            <button class="control-btn" onclick="toggleDarkMode()">
+                <i class="fa-solid fa-moon"></i>
+                <span data-lang="theme_btn">Dark Mode</span>
+            </button>
+            <!-- Language Toggle -->
+            <button class="control-btn" id="lang-btn" onclick="toggleLanguage()">
+                <i class="fa-solid fa-globe"></i>
+                <span>मराठी</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <h2 data-lang="portal_title"><i class="fa-solid fa-building-user"></i> Citizen Portal- Estate Services</h2>
+            <nav class="menu-nav">
+                <div class="menu-item green" onclick="switchView('cfc-application')" id="nav-cfc-application">
+                    <span data-lang="nav_cfc">Submit Online CFC Application</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+                <div class="menu-item pink" onclick="switchView('status-tracking')" id="nav-status-tracking">
+                    <span data-lang="nav_status">Check status/Upload Documents</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+                <div class="menu-item green" onclick="switchView('downloads')" id="nav-downloads">
+                    <span data-lang="nav_downloads">Download Formats, Undertakings etc.</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+                <div class="menu-item pink" onclick="switchView('payment')" id="nav-payment">
+                    <span data-lang="nav_payment">Online Payment</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+                <div class="menu-item green" onclick="switchView('receipts')" id="nav-receipts">
+                    <span data-lang="nav_receipt">Print/View Estate Payment Receipt</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+                <div class="menu-item admin-btn" onclick="switchView('admin-dashboard')" id="nav-admin-dashboard">
+                    <span data-lang="nav_admin"><i class="fa-solid fa-user-shield"></i> Admin Dashboard</span>
+                    <i class="fa-solid fa-arrow-right arrow"></i>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="content-panel">
+            
+            <!-- Default Dashboard View -->
+            <section class="view-section active" id="view-default">
+                <div class="default-view">
+                    <div>
+                        <h3 data-lang="welcome_title">Welcome to CIDCO Citizen Portal</h3>
+                        <p data-lang="welcome_desc">Access City and Industrial Development Corporation of Maharashtra estate services seamlessly online.</p>
+                    </div>
+                    <div class="building-image-container">
+                        <img src="cidco_bhavan.png" alt="CIDCO Bhavan Building">
+                        <div class="image-overlay">
+                            <h4 data-lang="bhavan_title">CIDCO Bhavan</h4>
+                            <p data-lang="bhavan_desc">CBD Belapur, Navi Mumbai, Maharashtra, India</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CFC Application Multi-Step Form -->
+            <section class="view-section" id="view-cfc-application">
+                <h3 data-lang="form_title"><i class="fa-solid fa-file-signature"></i> Submit Online CFC Application</h3>
+                <form onsubmit="handleCfcSubmit(event)" class="form-grid">
+                    <div class="form-group">
+                        <label data-lang="lbl_service">Select Service Category</label>
+                        <select name="serviceCategory" required>
+                            <option value="" data-lang="opt_select">-- Select Option --</option>
+                            <option value="noc" data-lang="opt_noc">No Objection Certificate (NOC)</option>
+                            <option value="transfer" data-lang="opt_transfer">Transfer of Tenancy Rights</option>
+                            <option value="mortgage" data-lang="opt_mortgage">Mortgage Permission</option>
+                            <option value="lease" data-lang="opt_lease">Extension of Lease Period</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_node">Node Name</label>
+                        <select name="nodeName" required>
+                            <option value="" data-lang="opt_select">-- Select Option --</option>
+                            <option value="belapur">CBD Belapur</option>
+                            <option value="vashi">Vashi</option>
+                            <option value="kharghar">Kharghar</option>
+                            <option value="panvel">New Panvel</option>
+                            <option value="ulwe">Ulwe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_name">Applicant Full Name</label>
+                        <input type="text" name="applicantName" placeholder="Enter Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_plot">Plot Number / Sector Number</label>
+                        <input type="text" name="plotNumber" placeholder="e.g. Sector 15, Plot 22" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_phone">Mobile Number</label>
+                        <input type="tel" name="mobileNumber" placeholder="Enter Mobile Number" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_email">Email Address</label>
+                        <input type="email" name="email" placeholder="Enter Email Address" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label data-lang="lbl_address">Correspondence Address</label>
+                        <textarea name="address" placeholder="Enter correspondence address here..." rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" data-lang="btn_submit_app">Submit Application</button>
+                </form>
+            </section>
+
+            <!-- Status Tracking / Document Upload View -->
+            <section class="view-section" id="view-status-tracking">
+                <h3 data-lang="track_title"><i class="fa-solid fa-magnifying-glass-chart"></i> Check Status & Upload Documents</h3>
+                <div class="tracking-container">
+                    <div class="tracking-input-wrapper">
+                        <input type="text" id="tracking-id-input" placeholder="Enter CFC Application ID (e.g. CFC9831)" required>
+                        <button class="btn-track" onclick="trackApplication()" data-lang="btn_track">Track Application</button>
+                    </div>
+                    
+                    <div id="tracking-result-panel" style="display: none;">
+                        <div class="status-timeline">
+                            <div class="timeline-step completed">
+                                <span class="timeline-title" data-lang="tl_1">CFC Application Submitted</span>
+                                <span class="timeline-desc" data-lang="tl_1_desc">Your application has been received successfully by the CFC.</span>
+                            </div>
+                            <div class="timeline-step active">
+                                <span class="timeline-title" data-lang="tl_2">Verification of Documents</span>
+                                <span class="timeline-desc" data-lang="tl_2_desc">Currently being scrutinized by the Estate Officer. Please upload required ID proofs below.</span>
+                            </div>
+                            <div class="timeline-step">
+                                <span class="timeline-title" data-lang="tl_3">Site Survey & Assessment</span>
+                                <span class="timeline-desc" data-lang="tl_3_desc">Visual inspection and boundary verification.</span>
+                            </div>
+                            <div class="timeline-step">
+                                <span class="timeline-title" data-lang="tl_4">Final Approval & Generation</span>
+                                <span class="timeline-desc" data-lang="tl_4_desc">Final signing off by the Joint Managing Director and certificate dispatch.</span>
+                            </div>
+                        </div>
+
+                        <!-- Document Upload Grid -->
+                        <div class="form-group full-width" style="margin-top: 35px;">
+                            <label data-lang="lbl_upload">Upload Pending Verification Documents (PDF / Image)</label>
+                            <div style="display: flex; gap: 15px; margin-top: 10px;">
+                                <input type="file" id="upload-file-input" style="flex-grow: 1;">
+                                <button class="btn-track" onclick="handleFileUpload()" data-lang="btn_upload">Upload File</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Document Download Center -->
+            <section class="view-section" id="view-downloads">
+                <h3 data-lang="dl_center_title"><i class="fa-solid fa-file-arrow-down"></i> Document Download Center</h3>
+                <p data-lang="dl_center_desc" style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Download official undertakings, indemnity bonds, and prescribed forms for estate transactions.</p>
+                <div class="doc-grid">
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <i class="fa-solid fa-file-pdf doc-icon"></i>
+                            <div class="doc-details">
+                                <h4 data-lang="doc1_title">Indemnity Bond Format</h4>
+                                <p>PDF • 182 KB</p>
+                            </div>
+                        </div>
+                        <button class="btn-download" onclick="triggerDownload('Indemnity_Bond.pdf')"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <i class="fa-solid fa-file-pdf doc-icon"></i>
+                            <div class="doc-details">
+                                <h4 data-lang="doc2_title">Standard Affidavit (Annexure B)</h4>
+                                <p>PDF • 220 KB</p>
+                            </div>
+                        </div>
+                        <button class="btn-download" onclick="triggerDownload('Affidavit_Annexure_B.pdf')"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <i class="fa-solid fa-file-word doc-icon" style="color: #2b579a;"></i>
+                            <div class="doc-details">
+                                <h4 data-lang="doc3_title">NOC Application Format</h4>
+                                <p>DOCX • 94 KB</p>
+                            </div>
+                        </div>
+                        <button class="btn-download" onclick="triggerDownload('NOC_Application.docx')"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                    <div class="doc-card">
+                        <div class="doc-info">
+                            <i class="fa-solid fa-file-pdf doc-icon"></i>
+                            <div class="doc-details">
+                                <h4 data-lang="doc4_title">Lease Agreement Undertaking</h4>
+                                <p>PDF • 312 KB</p>
+                            </div>
+                        </div>
+                        <button class="btn-download" onclick="triggerDownload('Lease_Agreement_Undertaking.pdf')"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Online Payment Module -->
+            <section class="view-section" id="view-payment">
+                <h3 data-lang="pay_title"><i class="fa-solid fa-credit-card"></i> Estate Service Online Payment</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label data-lang="lbl_pay_cfc">CFC Application ID / Challan ID</label>
+                        <input type="text" id="pay-id" placeholder="e.g. CFC9831" required>
+                    </div>
+                    <div class="form-group">
+                        <label data-lang="lbl_pay_amt">Payment Amount (INR)</label>
+                        <input type="number" id="pay-amount" placeholder="e.g. 5000" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label data-lang="lbl_pay_method">Select Payment Method</label>
+                        <div class="payment-options">
+                            <div class="pay-option-card active" onclick="selectPayMethod('card', this)">
+                                <i class="fa-regular fa-credit-card"></i>
+                                <span data-lang="pay_card">Credit / Debit Card</span>
+                            </div>
+                            <div class="pay-option-card" onclick="selectPayMethod('upi', this)">
+                                <i class="fa-brands fa-whatsapp"></i>
+                                <span data-lang="pay_upi">UPI Payment (GPay, PhonePe)</span>
+                            </div>
+                            <div class="pay-option-card" onclick="selectPayMethod('net', this)">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <span data-lang="pay_net">Net Banking</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-submit" onclick="handlePayment()" data-lang="btn_pay">Proceed & Pay Securely</button>
+                </div>
+            </section>
+
+            <!-- Estate Payment Receipt Printing -->
+            <section class="view-section" id="view-receipts">
+                <h3 data-lang="rcpt_title"><i class="fa-solid fa-print"></i> Print & View Payment Receipt</h3>
+                <div class="tracking-input-wrapper" style="margin-top: 20px;">
+                    <input type="text" id="receipt-id-input" placeholder="Enter Transaction Reference / Challan ID (e.g. TXN55981)" required>
+                    <button class="btn-track" onclick="loadReceipt()" data-lang="btn_rcpt_load">Load Receipt</button>
+                </div>
+
+                <div id="receipt-result-panel" style="display: none;">
+                    <div class="receipt-card">
+                        <div class="receipt-header">
+                            <img src="cidco_logo.png" alt="CIDCO Logo" class="receipt-logo-img">
+                            <div class="receipt-title">
+                                <h4 data-lang="rcpt_card_title">Estate Services Payment Receipt</h4>
+                                <p style="font-size: 11px; color: var(--text-muted);" data-lang="rcpt_govt">Government of Maharashtra Undertaking</p>
+                            </div>
+                        </div>
+                        <div class="receipt-row">
+                            <span data-lang="rcpt_lbl_id">Transaction Reference ID</span>
+                            <strong id="rcpt-ref">TXN55981249</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span data-lang="rcpt_lbl_cfc">CFC Application ID</span>
+                            <strong id="rcpt-cfc">CFC9831</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span data-lang="rcpt_lbl_date">Payment Date & Time</span>
+                            <strong id="rcpt-date">2026-05-18 16:15:30</strong>
+                        </div>
+                        <div class="receipt-row">
+                            <span data-lang="rcpt_lbl_status">Status</span>
+                            <strong style="color: #10b981;" data-lang="rcpt_status_val">SUCCESSFUL</strong>
+                        </div>
+                        <div class="receipt-total">
+                            <span data-lang="rcpt_lbl_total">Total Paid</span>
+                            <span id="rcpt-amount">₹5,000.00</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-submit" style="margin-top: 25px;" onclick="window.print()" data-lang="btn_rcpt_print">Print Receipt Document</button>
+                </div>
+            </section>
+
+            <!-- Admin Authentication (Login & Sign Up) View -->
+            <section class="view-section" id="view-admin-auth">
+                <div class="admin-auth-container" style="max-width: 450px; margin: 40px auto; background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 35px; box-shadow: var(--shadow-lg);">
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <i class="fa-solid fa-user-shield" style="font-size: 45px; color: var(--primary); margin-bottom: 12px;"></i>
+                        <h4 style="font-size: 20px; font-weight: 800; color: var(--text-main);" data-lang="auth_title">CIDCO Admin Gate</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);" data-lang="auth_subtitle">Authorized personnel access only</p>
+                    </div>
+
+                    <!-- Auth Form Tabs -->
+                    <div class="auth-tabs" style="display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 25px;">
+                        <button class="auth-tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')" style="flex: 1; background: none; border: none; border-bottom: 2px solid var(--primary); padding: 12px; font-size: 14px; font-weight: 700; color: var(--primary); cursor: pointer; transition: var(--transition);" data-lang="auth_tab_login">Login</button>
+                        <button class="auth-tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')" style="flex: 1; background: none; border: none; border-bottom: 2px solid transparent; padding: 12px; font-size: 14px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: var(--transition);" data-lang="auth_tab_register">Register</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="admin-login-form" onsubmit="handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 15px;">
+                        <div class="form-group">
+                            <label data-lang="lbl_username">Username</label>
+                            <input type="text" name="username" placeholder="Enter Admin Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="lbl_password">Password</label>
+                            <input type="password" name="password" placeholder="Enter Secure Password" required>
+                        </div>
+                        <button type="submit" class="btn-submit" style="grid-column: span 1; margin-top: 10px;" data-lang="btn_login">Access Admin Portal</button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="admin-register-form" onsubmit="handleAdminRegister(event)" style="display: none; flex-direction: column; gap: 15px;">
+                        <div class="form-group">
+                            <label data-lang="lbl_full_name">Full Name & Title</label>
+                            <input type="text" name="fullName" placeholder="e.g. Officer Ramesh Kumar" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="lbl_username">Username</label>
+                            <input type="text" name="username" placeholder="Choose Admin Username" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-lang="lbl_password">Password</label>
+                            <input type="password" name="password" placeholder="Choose Secure Password" minlength="6" required>
+                        </div>
+                        <button type="submit" class="btn-submit" style="grid-column: span 1; margin-top: 10px;" data-lang="btn_register">Register Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Admin Dashboard Panel -->
+            <section class="view-section" id="view-admin-dashboard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+                    <h3 style="margin-bottom: 0;"><i class="fa-solid fa-user-shield"></i> Admin Control Center <span id="admin-welcome-name" style="font-size: 14.5px; font-weight: 500; color: var(--text-muted); margin-left: 10px; font-family: 'Plus Jakarta Sans', sans-serif;"></span></h3>
+                    <button class="admin-secondary-btn" onclick="handleAdminLogout()" style="padding: 6px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px; border-color: #f87171; color: #f87171; background: transparent; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; transition: var(--transition);">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+                
+                <!-- Statistics Bar -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <span class="stat-label">Total Applications</span>
+                        <span class="stat-value" id="stat-total">0</span>
+                        <i class="fa-solid fa-folder-open stat-icon"></i>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span class="stat-label">Pending Scrutiny</span>
+                        <span class="stat-value" id="stat-pending">0</span>
+                        <i class="fa-solid fa-clock stat-icon" style="color: #ff9800;"></i>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span class="stat-label">Site Surveys</span>
+                        <span class="stat-value" id="stat-survey">0</span>
+                        <i class="fa-solid fa-map-location-dot stat-icon" style="color: #38bdf8;"></i>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span class="stat-label">Approved Portal NOCs</span>
+                        <span class="stat-value" id="stat-approved">0</span>
+                        <i class="fa-solid fa-circle-check stat-icon" style="color: #10b981;"></i>
+                    </div>
+                </div>
+
+                <!-- Real-Time Interactive Visual Analytics -->
+                <div class="admin-analytics-section" style="margin-top: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 30px;">
+                    <!-- Chart Card 1: Applications by Node Location -->
+                    <div class="analytics-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 25px; box-shadow: var(--shadow-sm); position: relative;">
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-main);">
+                            <i class="fa-solid fa-chart-simple" style="color: var(--primary);"></i> 
+                            <span data-lang="analytics_node_title">Application Density by Node</span>
+                        </h4>
+                        <div id="analytics-nodes-container" style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- Dynamically loaded progress bars for each node -->
+                        </div>
+                    </div>
+
+                    <!-- Chart Card 2: Status & Process Turnaround -->
+                    <div class="analytics-card" style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 25px; box-shadow: var(--shadow-sm); position: relative;">
+                        <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-main);">
+                            <i class="fa-solid fa-chart-pie" style="color: var(--primary);"></i>
+                            <span data-lang="analytics_ratio_title">Status Allocation Share</span>
+                        </h4>
+                        <div style="display: flex; align-items: center; justify-content: space-around; height: 180px;">
+                            <div class="donut-chart-wrapper" style="position: relative; width: 140px; height: 140px;">
+                                <!-- SVG Donut Chart representing share -->
+                                <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
+                                    <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="transparent"></circle>
+                                    <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="var(--border-color)" stroke-width="3"></circle>
+                                    
+                                    <!-- Dynamic segments generated in script.js -->
+                                    <circle id="donut-segment-submitted" class="donut-segment-submitted" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="var(--primary)" stroke-width="4.5" stroke-dasharray="0 100" stroke-dashoffset="100"></circle>
+                                    <circle id="donut-segment-verification" class="donut-segment-verification" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ff9800" stroke-width="4.5" stroke-dasharray="0 100" stroke-dashoffset="100"></circle>
+                                    <circle id="donut-segment-survey" class="donut-segment-survey" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#38bdf8" stroke-width="4.5" stroke-dasharray="0 100" stroke-dashoffset="100"></circle>
+                                    <circle id="donut-segment-approved" class="donut-segment-approved" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#10b981" stroke-width="4.5" stroke-dasharray="0 100" stroke-dashoffset="100"></circle>
+                                </svg>
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                    <span id="donut-total-count" style="font-size: 20px; font-weight: 800; font-family: 'Outfit'; color: var(--text-main);">0</span>
+                                    <p style="font-size: 10px; text-transform: uppercase; color: var(--text-muted); margin: 0;">Total</p>
+                                </div>
+                            </div>
+                            <!-- Donut Legends -->
+                            <div class="donut-legend" style="display: flex; flex-direction: column; gap: 10px; font-size: 12px; font-weight: 600;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary);"></span>
+                                    <span>Submitted (<span id="legend-pct-submitted">0%</span>)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #ff9800;"></span>
+                                    <span>Scrutiny (<span id="legend-pct-verification">0%</span>)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #38bdf8;"></span>
+                                    <span>Site Survey (<span id="legend-pct-survey">0%</span>)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="width: 10px; height: 10px; border-radius: 50%; background-color: #10b981;"></span>
+                                    <span>Approved (<span id="legend-pct-approved">0%</span>)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-controls-bar">
+                    <div class="admin-search-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="admin-search-input" placeholder="Search by CFC ID or Applicant Name..." oninput="filterAdminApplications()">
+                    </div>
+                    <div>
+                        <select id="admin-filter-status" onchange="filterAdminApplications()" style="padding: 10px 15px;">
+                            <option value="ALL">All Statuses</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Verification">Verification</option>
+                            <option value="Site Survey">Site Survey</option>
+                            <option value="Approved">Approved</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>CFC ID</th>
+                                <th>Applicant</th>
+                                <th>Service Category</th>
+                                <th>Node</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-applications-table-body">
+                            <!-- Rows loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- AI Chatbot Assistant Widget -->
+    <div class="chat-widget">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="chat-bot-profile">
+                    <div class="chat-bot-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="chat-bot-name">
+                        <h4 data-lang="bot_name">CIDCO Assistant</h4>
+                        <span data-lang="bot_status">Online (AI Helper)</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="toggleChatWindow()"></i>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="msg bot" data-lang="bot_msg_welcome">
+                    Hello! I'm your CIDCO Estate Assistant. How can I help you with your property applications, tracking, or documents today?
+                </div>
+            </div>
+            <div class="chat-quick-replies">
+                <button class="quick-reply-btn" onclick="quickChat('How to apply for NOC?')" data-lang="qr_1">How to apply for NOC?</button>
+                <button class="quick-reply-btn" onclick="quickChat('Check Application Status')" data-lang="qr_2">Check Application Status</button>
+                <button class="quick-reply-btn" onclick="quickChat('Download Affidavit formats')" data-lang="qr_3">Affidavit Formats</button>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
+                <button class="btn-send-chat" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div class="chat-bubble" onclick="toggleChatWindow()">
+            <i class="fa-solid fa-comments"></i>
+        </div>
+    </div>
+
+    <!-- Admin Detail & Scrutiny Modal -->
+    <div class="admin-modal-overlay" id="admin-modal-overlay">
+        <div class="admin-modal">
+            <div class="admin-modal-header">
+                <h4 id="modal-app-id">CFC Application Details</h4>
+                <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 18px; color: var(--text-muted);" onclick="closeAdminModal()"></i>
+            </div>
+            <div class="admin-modal-body">
+                
+                <div>
+                    <h5 class="detail-section-title">Applicant Profile</h5>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span>Applicant Name</span>
+                            <strong id="modal-applicant-name">-</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Mobile Number</span>
+                            <strong id="modal-mobile">-</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Email Address</span>
+                            <strong id="modal-email">-</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Node Location</span>
+                            <strong id="modal-node">-</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Plot & Sector</span>
+                            <strong id="modal-plot">-</strong>
+                        </div>
+                        <div class="detail-item full-width">
+                            <span>Correspondence Address</span>
+                            <strong id="modal-address">-</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="detail-section-title">Service Details</h5>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <span>Requested Service</span>
+                            <strong id="modal-service">-</strong>
+                        </div>
+                        <div class="detail-item">
+                            <span>Submission Date</span>
+                            <strong id="modal-date">-</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="detail-section-title">Uploaded Verification Documents</h5>
+                    <div id="modal-documents-list">
+                        <!-- Document items will go here -->
+                        <span style="font-size: 13px; color: var(--text-muted); font-style: italic;">No verification documents uploaded by applicant yet.</span>
+                    </div>
+                </div>
+
+                <!-- ADVANCED AI DOCUMENT SCRUTINY MODULE -->
+                <div id="ai-scrutiny-module" style="margin-top: 25px; padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background-color: var(--bg-body); display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h5 class="detail-section-title" style="margin: 0; color: #8b5cf6; border-bottom: none; padding-bottom: 0;"><i class="fa-solid fa-microchip"></i> AI-Powered Scrutiny Engine</h5>
+                        <button id="btn-run-ai" class="btn-submit" style="width: auto; padding: 6px 15px; font-size: 12px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);" onclick="runAiScrutiny()">
+                            <i class="fa-solid fa-bolt"></i> Run AI Analysis
+                        </button>
+                    </div>
+                    
+                    <!-- Loading State -->
+                    <div id="ai-loading-state" style="display: none; flex-direction: column; align-items: center; gap: 15px; padding: 20px 0;">
+                        <div class="ai-scanner"></div>
+                        <span style="font-size: 13.5px; color: var(--text-main); font-weight: 600; font-family: monospace;" id="ai-loading-text">Initializing Neural Network...</span>
+                    </div>
+
+                    <!-- Results Dashboard -->
+                    <div id="ai-results-dashboard" style="display: none;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div style="background: rgba(0,0,0,0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.05);">
+                                <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">1. OCR Extraction</span>
+                                <p style="font-size: 13px; margin: 8px 0 0 0; color: var(--text-main); font-family: monospace; line-height: 1.4;">
+                                    <i class="fa-solid fa-check" style="color: #10b981; margin-right: 5px;"></i>Applicant: <strong id="ai-ex-name">...</strong><br>
+                                    <i class="fa-solid fa-check" style="color: #10b981; margin-right: 5px;"></i>Plot Ref: <strong id="ai-ex-plot">...</strong>
+                                </p>
+                            </div>
+                            <div style="background: rgba(0,0,0,0.02); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.05);">
+                                <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">2. NLP Entity Matching</span>
+                                <p style="font-size: 13px; margin: 8px 0 0 0; color: var(--text-main); line-height: 1.4;">
+                                    <i class="fa-solid fa-check" style="color: #10b981; margin-right: 5px;"></i>Legal Type: <strong id="ai-ex-type">...</strong><br>
+                                    <i class="fa-solid fa-check" style="color: #10b981; margin-right: 5px;"></i>Node Verify: <strong id="ai-ex-node">...</strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 15px; background: rgba(16, 185, 129, 0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2); display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <span style="font-size: 11px; text-transform: uppercase; color: #10b981; font-weight: 800; letter-spacing: 0.5px;">3. Automated Cross-Verification</span>
+                                <h6 style="margin: 5px 0 0 0; font-size: 15px; font-weight: 700; color: var(--text-main);">Database Integrity Checked</h6>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">4. AI Confidence Score</span>
+                                <h4 id="ai-confidence-score" style="margin: 0; font-size: 24px; font-weight: 900; color: #10b981; font-family: 'Outfit';">98.4%</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px;">
+                    <h5 class="detail-section-title">Administrative Actions & Scrutiny</h5>
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Update Scrutiny & Field Progress Status</label>
+                        <select id="modal-update-status" style="width: 100%; margin-top: 5px;">
+                            <option value="Submitted">Submitted (Initial Stage)</option>
+                            <option value="Verification">Verification (Officer Scrutiny)</option>
+                            <option value="Site Survey">Site Survey (Field Boundary Verification)</option>
+                            <option value="Approved">Approved (Dispatch Estate Certificate)</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="admin-modal-footer">
+                <button class="admin-secondary-btn" onclick="closeAdminModal()">Cancel</button>
+                <button class="admin-action-btn" onclick="saveAdminStatusUpdate()" style="padding: 10px 20px;">Save Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Linked Premium Interactive Logic Script -->
+    <script src="script.js"></script>
+</body>
+</html>
