@@ -264,6 +264,77 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Dynamic Payment Details Container -->
+                    <div id="payment-details-container" class="form-group full-width" style="margin-top: 5px; margin-bottom: 15px; background: var(--bg-body); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <!-- Credit / Debit Card -->
+                        <div id="pay-details-card" class="payment-detail-section" style="display: block;">
+                            <h4 style="margin-bottom: 15px; font-size: 15px; font-weight: 600; color: var(--text-main);"><i class="fa-solid fa-credit-card" style="margin-right: 8px;"></i>Card Details</h4>
+                            <div class="form-grid" style="gap: 15px;">
+                                <div class="form-group full-width">
+                                    <label>Card Number</label>
+                                    <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+                                </div>
+                                <div class="form-group">
+                                    <label>Expiry Date</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                                </div>
+                                <div class="form-group">
+                                    <label>CVV</label>
+                                    <input type="password" id="card-cvv" placeholder="***" maxlength="4">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>Name on Card</label>
+                                    <input type="text" id="card-name" placeholder="Enter name exactly as on card">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- UPI -->
+                        <div id="pay-details-upi" class="payment-detail-section" style="display: none; text-align: center;">
+                            <h4 style="margin-bottom: 15px; font-size: 15px; font-weight: 600; color: var(--text-main);"><i class="fa-solid fa-qrcode" style="margin-right: 8px;"></i>Scan to Pay via UPI</h4>
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px;">
+                                <div style="width: 180px; height: 180px; background: #fff; border: 2px dashed var(--primary); display: flex; align-items: center; justify-content: center; border-radius: 12px; margin-bottom: 15px; position: relative; overflow: hidden;">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=cidco@upi" alt="UPI QR Code" style="width: 100%; height: 100%; object-fit: contain; padding: 10px;">
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%); animation: scan 2s linear infinite; pointer-events: none;"></div>
+                                </div>
+                                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Scan the QR Code using any UPI app (GPay, PhonePe, Paytm)</p>
+                                <div style="display: flex; align-items: center; width: 100%; gap: 15px; margin: 10px 0;">
+                                    <div style="flex-grow: 1; height: 1px; background: var(--border-color);"></div>
+                                    <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">OR</span>
+                                    <div style="flex-grow: 1; height: 1px; background: var(--border-color);"></div>
+                                </div>
+                                <div class="form-group full-width" style="text-align: left;">
+                                    <label>Enter UPI ID (VPA)</label>
+                                    <input type="text" id="upi-id" placeholder="e.g. username@upi">
+                                </div>
+                            </div>
+                            <style>
+                                @keyframes scan {
+                                    0% { transform: translateY(-100%); }
+                                    100% { transform: translateY(100%); }
+                                }
+                            </style>
+                        </div>
+
+                        <!-- Net Banking -->
+                        <div id="pay-details-net" class="payment-detail-section" style="display: none;">
+                            <h4 style="margin-bottom: 15px; font-size: 15px; font-weight: 600; color: var(--text-main);"><i class="fa-solid fa-building-columns" style="margin-right: 8px;"></i>Net Banking</h4>
+                            <div class="form-group full-width">
+                                <label>Select Your Bank</label>
+                                <select id="net-banking-bank" style="width: 100%;">
+                                    <option value="">-- Choose Bank --</option>
+                                    <option value="sbi">State Bank of India</option>
+                                    <option value="hdfc">HDFC Bank</option>
+                                    <option value="icici">ICICI Bank</option>
+                                    <option value="axis">Axis Bank</option>
+                                    <option value="kotak">Kotak Mahindra Bank</option>
+                                    <option value="pnb">Punjab National Bank</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="btn-submit" onclick="handlePayment()" data-lang="btn_pay">Proceed & Pay Securely</button>
                 </div>
             </section>

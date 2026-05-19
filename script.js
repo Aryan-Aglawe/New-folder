@@ -549,6 +549,14 @@ function selectPayMethod(method, element) {
     paymentMethod = method;
     document.querySelectorAll('.pay-option-card').forEach(card => card.classList.remove('active'));
     element.classList.add('active');
+
+    // Toggle visibility of payment details sections
+    const detailsContainer = document.getElementById('payment-details-container');
+    if (detailsContainer) {
+        document.getElementById('pay-details-card').style.display = method === 'card' ? 'block' : 'none';
+        document.getElementById('pay-details-upi').style.display = method === 'upi' ? 'block' : 'none';
+        document.getElementById('pay-details-net').style.display = method === 'net' ? 'block' : 'none';
+    }
 }
 
 async function handlePayment() {
@@ -558,6 +566,27 @@ async function handlePayment() {
     if (!payId || !amount) {
         showToast('Error', currentLang === 'en' ? 'Please fill in all payment details.' : 'कृपया सर्व पेमेंट तपशील भरा.', 'error');
         return;
+    }
+
+    // Validate payment method specific details
+    if (paymentMethod === 'card') {
+        const cardNum = document.getElementById('card-number').value.trim();
+        const cardExp = document.getElementById('card-expiry').value.trim();
+        const cardCvv = document.getElementById('card-cvv').value.trim();
+        if (!cardNum || !cardExp || !cardCvv) {
+            showToast('Error', currentLang === 'en' ? 'Please enter valid card details.' : 'कृपया वैध कार्ड तपशील प्रविष्ट करा.', 'error');
+            return;
+        }
+    } else if (paymentMethod === 'upi') {
+        const upiId = document.getElementById('upi-id').value.trim();
+        // Just checking if upiId is entered (assuming they didn't scan)
+        // If we want scanning to be an option, we can make it optional, but let's encourage them to enter at least something or simulate scan success
+    } else if (paymentMethod === 'net') {
+        const netBank = document.getElementById('net-banking-bank').value;
+        if (!netBank) {
+            showToast('Error', currentLang === 'en' ? 'Please select a bank for Net Banking.' : 'कृपया नेट बँकिंगसाठी बँक निवडा.', 'error');
+            return;
+        }
     }
 
     showToast('Processing', currentLang === 'en' ? 'Connecting to payment gateway...' : 'पेमेंट प्रक्रिया चालू आहे...', 'success');
